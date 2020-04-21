@@ -11,8 +11,9 @@ interface FilterFieldCheckerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param string $type
      *
      * @return bool
      */
-    public function isCompanyFilterApplicable(array $filterFieldTransfers): bool;
+    public function isFilterFieldSet(array $filterFieldTransfers, string $type): bool;
 }

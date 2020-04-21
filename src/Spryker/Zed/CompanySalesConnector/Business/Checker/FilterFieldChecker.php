@@ -7,23 +7,35 @@
 
 namespace Spryker\Zed\CompanySalesConnector\Business\Checker;
 
-use Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig;
+use Generated\Shared\Transfer\FilterFieldTransfer;
 
 class FilterFieldChecker implements FilterFieldCheckerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param string $type
      *
      * @return bool
      */
-    public function isCompanyFilterApplicable(array $filterFieldTransfers): bool
+    public function isFilterFieldSet(array $filterFieldTransfers, string $type): bool
+    {
+        return $this->extractFilterFieldByType($filterFieldTransfers, $type) !== null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param string $type
+     *
+     * @return \Generated\Shared\Transfer\FilterFieldTransfer|null
+     */
+    protected function extractFilterFieldByType(array $filterFieldTransfers, string $type): ?FilterFieldTransfer
     {
         foreach ($filterFieldTransfers as $filterFieldTransfer) {
-            if ($filterFieldTransfer->getType() === CompanySalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY) {
-                return true;
+            if ($filterFieldTransfer->getType() === $type) {
+                return $filterFieldTransfer;
             }
         }
 
-        return false;
+        return null;
     }
 }
